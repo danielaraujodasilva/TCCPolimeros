@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title>Santos</title>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!--
+        <link  href="apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114" >
+	<script src="jquery.js"></script>
+	-->
+        
+        <link href="media/css/styles.css" rel="stylesheet" type="text/css">
+        <link href="media/css/base.css" rel="stylesheet" type="text/css">
+        <link href="media/css/skeleton.css" rel="stylesheet" type="text/css">
+        <link href="media/css/layout.css" rel="stylesheet" type="text/css">
+        
+</head>
+<body>
+
+
+    <div id="topo">
+        <div class="container" style="height:50px;">
+            <div class="sixteen columns" style="color:white; font-size:25px; margin-top:15px;">
+                GUIA PRÁTICO DE INJEÇÃO PLÁSTICA
+            </div>
+
+        </div>
+    </div>
+
+<div class="content">
+
+<script>
+var v_tempo_de_ciclos = '0';
+var v_numero_de_cavidades = '0';
+var v_peso_por_injetada = '0';
+
+var v_producao_real_de_pecas = '0';
+var v_total_de_horas_por_turno = '0';
+var v_pecas_produzidas_por_turno = '0';
+
+function alteraConta(){
+	
+	var v_tempo_de_ciclos = document.formulario.tempo_de_ciclos.value;
+	var v_numero_de_cavidades = document.formulario.numero_de_cavidades.value;
+	var v_peso_por_injetada = document.formulario.peso_por_injetada.value;
+	var v_producao_real_de_pecas = document.formulario.producao_real_de_pecas.value;
+	var v_total_de_horas_por_turno = document.formulario.total_de_horas_por_turno.value;
+	var v_pecas_produzidas_por_turno = document.formulario.pecas_produzidas_por_turno.value;
+	
+	var v_injecoes_por_hora = 3600/v_tempo_de_ciclos;
+	var v_pecas_por_hora = v_injecoes_por_hora*v_numero_de_cavidades;
+	var v_peso_de_material_por_hora = (v_injecoes_por_hora*v_peso_por_injetada)/1000;
+	var v_eficiencia_por_hora = (v_producao_real_de_pecas/v_pecas_por_hora)*100;
+	var v_eficiencia_por_turno = (v_pecas_produzidas_por_turno/(v_pecas_por_hora*v_total_de_horas_por_turno))*100;
+	var v_horas_trabalhadas = (v_total_de_horas_por_turno*v_eficiencia_por_turno)/100;
+	var v_horas_improdutivas = v_total_de_horas_por_turno-v_horas_trabalhadas;
+	
+	var v_horas_trabalhadas_arredondado = v_horas_trabalhadas.toFixed(2);
+	var minutos_trabalhados_1 = v_horas_trabalhadas_arredondado.substr(2);
+	var minutos_trabalhados_2 = '0.'+minutos_trabalhados_1;
+	var minutos_trabalhados_3 = minutos_trabalhados_2*60;
+	var minutos_trabalhados = minutos_trabalhados_3.toFixed(0);
+	var horas_trabalhadas_truncado = Math.floor (v_horas_trabalhadas); 
+	var hora_e_minuto_trabalhados = horas_trabalhadas_truncado+':'+minutos_trabalhados;
+	
+	var v_horas_improdutivas_arredondado = v_horas_improdutivas.toFixed(2);
+	var minutos_improdutivos_1 = v_horas_improdutivas_arredondado.substr(2);
+	var minutos_improdutivos_2 = '0.'+minutos_improdutivos_1;
+	var minutos_improdutivos_3 = minutos_improdutivos_2*60;
+	var minutos_improdutivos = minutos_improdutivos_3.toFixed(0);
+	var horas_improdutivas_truncado = Math.floor (v_horas_improdutivas); 
+	var hora_e_minuto_improdutivos = horas_improdutivas_truncado+':'+minutos_improdutivos;
+	
+	
+	
+	document.getElementById("injecoes_por_hora").innerHTML = v_injecoes_por_hora;
+	document.getElementById("pecas_por_hora").innerHTML = v_pecas_por_hora;
+	document.getElementById("peso_de_material_por_hora").innerHTML = v_peso_de_material_por_hora;
+	document.getElementById("eficiencia_por_hora").innerHTML = v_eficiencia_por_hora.toFixed(2)+'%';
+	document.getElementById("eficiencia_por_turno").innerHTML = v_eficiencia_por_turno.toFixed(2)+'%';
+	document.getElementById("horas_trabalhadas").innerHTML = hora_e_minuto_trabalhados;
+	document.getElementById("horas_improdutivas").innerHTML = hora_e_minuto_improdutivos;
+	
+	
+}
+
+</script>
+
+
+    <div class="container">
+        <div class="sixteen columns link">
+            
+			<form name="formulario">
+			
+				<label name="label_tempo_de_ciclos">TEMPO DE CICLO(S)</label>
+				<input type="text" name="tempo_de_ciclos" onchange="alteraConta();" />
+				<label name="label_numero_de_cavidades">NUMERO DE CAVIDADES</label>
+				<input type="text" name="numero_de_cavidades" onchange="alteraConta();" />
+				<label name="label_peso_por_injetada">PESO POR INJETADA (Kg)</label>
+				<input type="text" name="peso_por_injetada" onchange="alteraConta();" />
+				
+				<label name="label_producao_real_de_pecas">PRODUÇÃO REAL DE PEÇAS (1 HORA)</label>
+				<input type="text" name="producao_real_de_pecas" onchange="alteraConta();" />
+				<label name="label_total_de_horas_por_turno">TOTAL DE HORAS POR TURNO</label>
+				<input type="text" name="total_de_horas_por_turno" onchange="alteraConta();" />
+				<label name="label_pecas_produzidas_por_turno">PEÇAS PRODUZIDAS POR TURNO</label>
+				<input type="text" name="pecas_produzidas_por_turno" onchange="alteraConta();" />
+				
+			</form>
+			
+			
+				<p>
+				<span><b>INJEÇÕES POR HORA:</b></span> <span id='injecoes_por_hora'>0</span><br>
+				<span><b>PEÇAS POR HORA:</b></span> <span id='pecas_por_hora'>0</span><br>
+				<span><b>PESO DE MATERIAL POR HORA (kg):</b></span> <span id='peso_de_material_por_hora'>0</span><br>
+				<span><b>EFICIÊNCIA POR HORA:</b></span> <span id='eficiencia_por_hora'>0</span><br>
+				<span><b>EFICIÊNCIA POR TURNO:</b></span> <span id='eficiencia_por_turno'>0</span><br>
+				<span><b>HORAS TRABALHADAS:</b></span> <span id='horas_trabalhadas'>0</span><br>
+				<span><b>HORAS IMPRODUTIVAS:</b></span> <span id='horas_improdutivas'>0</span><br>
+				</p>
+			</div>
+			
+    </div>
+
+</div>
+
+
+<div id="rodape">
+    <div class="container">
+
+        <div class="botao columns">
+            <a href="index.html"><button>HOME</button></a>
+        </div>
+
+        <div class="botao columns">
+            <a href="material.html"><button>MATERIAL</button></a>
+        </div>
+
+        <div class="botao columns">
+            <a href="solucoes.html"><button>DEFEITOS</button></a>
+        </div>
+        
+        <div class="botao columns">
+            <a href="formulas.html"><button>FORMULAS</button></a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
