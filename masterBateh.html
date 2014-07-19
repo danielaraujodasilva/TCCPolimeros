@@ -51,47 +51,16 @@ var v_pecas_produzidas_por_turno = '0';
 
 function alteraConta(){
 	
-	var v_tempo_de_ciclos = document.formulario.tempo_de_ciclos.value;
-	var v_numero_de_cavidades = document.formulario.numero_de_cavidades.value;
-	var v_peso_por_injetada = document.formulario.peso_por_injetada.value;
-	var v_producao_real_de_pecas = document.formulario.producao_real_de_pecas.value;
-	var v_total_de_horas_por_turno = document.formulario.total_de_horas_por_turno.value;
-	var v_pecas_produzidas_por_turno = document.formulario.pecas_produzidas_por_turno.value;
+	var v_peso_material = document.formulario.peso_material.value;
+	var v_masterbach = document.formulario.masterbach.value;
+	var v_peso_masterbach = (v_peso_material*v_masterbach)/100;
 	
-	var v_injecoes_por_hora = 3600/v_tempo_de_ciclos;
-	var v_pecas_por_hora = v_injecoes_por_hora*v_numero_de_cavidades;
-	var v_peso_de_material_por_hora = (v_injecoes_por_hora*v_peso_por_injetada)/1000;
-	var v_eficiencia_por_hora = (v_producao_real_de_pecas/v_pecas_por_hora)*100;
-	var v_eficiencia_por_turno = (v_pecas_produzidas_por_turno/(v_pecas_por_hora*v_total_de_horas_por_turno))*100;
-	var v_horas_trabalhadas = (v_total_de_horas_por_turno*v_eficiencia_por_turno)/100;
-	var v_horas_improdutivas = v_total_de_horas_por_turno-v_horas_trabalhadas;
+	var v_peso_material_number = parseFloat(v_peso_material);
+	var v_peso_masterbach_number = parseFloat(v_peso_masterbach);
+	var v_peso_total = v_peso_material_number + v_peso_masterbach_number;
 	
-	var v_horas_trabalhadas_arredondado = v_horas_trabalhadas.toFixed(2);
-	var minutos_trabalhados_1 = v_horas_trabalhadas_arredondado.substr(2);
-	var minutos_trabalhados_2 = '0.'+minutos_trabalhados_1;
-	var minutos_trabalhados_3 = minutos_trabalhados_2*60;
-	var minutos_trabalhados = minutos_trabalhados_3.toFixed(0);
-	var horas_trabalhadas_truncado = Math.floor (v_horas_trabalhadas); 
-	var hora_e_minuto_trabalhados = horas_trabalhadas_truncado+':'+minutos_trabalhados;
-	
-	var v_horas_improdutivas_arredondado = v_horas_improdutivas.toFixed(2);
-	var minutos_improdutivos_1 = v_horas_improdutivas_arredondado.substr(2);
-	var minutos_improdutivos_2 = '0.'+minutos_improdutivos_1;
-	var minutos_improdutivos_3 = minutos_improdutivos_2*60;
-	var minutos_improdutivos = minutos_improdutivos_3.toFixed(0);
-	var horas_improdutivas_truncado = Math.floor (v_horas_improdutivas); 
-	var hora_e_minuto_improdutivos = horas_improdutivas_truncado+':'+minutos_improdutivos;
-	
-	
-	
-	document.getElementById("injecoes_por_hora").innerHTML = v_injecoes_por_hora;
-	document.getElementById("pecas_por_hora").innerHTML = v_pecas_por_hora;
-	document.getElementById("peso_de_material_por_hora").innerHTML = v_peso_de_material_por_hora;
-	document.getElementById("eficiencia_por_hora").innerHTML = v_eficiencia_por_hora.toFixed(2)+'%';
-	document.getElementById("eficiencia_por_turno").innerHTML = v_eficiencia_por_turno.toFixed(2)+'%';
-	document.getElementById("horas_trabalhadas").innerHTML = hora_e_minuto_trabalhados;
-	document.getElementById("horas_improdutivas").innerHTML = hora_e_minuto_improdutivos;
-	
+	document.getElementById("id_peso_material").innerHTML = Math.floor (v_peso_masterbach)+" Kg";
+	document.getElementById("id_peso_total").innerHTML = Math.floor (v_peso_total)+" Kg";
 	
 }
 
@@ -103,31 +72,17 @@ function alteraConta(){
             
 			<form name="formulario">
 			
-				<label name="label_tempo_de_ciclos">TEMPO DE CICLO(S)</label>
-				<input type="text" name="tempo_de_ciclos" onchange="alteraConta();" />
-				<label name="label_numero_de_cavidades">NUMERO DE CAVIDADES</label>
-				<input type="text" name="numero_de_cavidades" onchange="alteraConta();" />
-				<label name="label_peso_por_injetada">PESO POR INJETADA (Kg)</label>
-				<input type="text" name="peso_por_injetada" onchange="alteraConta();" />
-				
-				<label name="label_producao_real_de_pecas">PRODUÇÃO REAL DE PEÇAS (1 HORA)</label>
-				<input type="text" name="producao_real_de_pecas" onchange="alteraConta();" />
-				<label name="label_total_de_horas_por_turno">TOTAL DE HORAS POR TURNO</label>
-				<input type="text" name="total_de_horas_por_turno" onchange="alteraConta();" />
-				<label name="label_pecas_produzidas_por_turno">PEÇAS PRODUZIDAS POR TURNO</label>
-				<input type="text" name="pecas_produzidas_por_turno" onchange="alteraConta();" />
+				<label name="label_peso_material">PESO MATERIAL (Kg)</label>
+				<input type="text" name="peso_material" onchange="alteraConta();" />
+				<label name="label_masterbach">MASTERBACH (%)</label>
+				<input type="text" name="masterbach" onchange="alteraConta();" />
 				
 			</form>
 			
 			
 				<p>
-				<span><b>INJEÇÕES POR HORA:</b></span> <span id='injecoes_por_hora'>0</span><br>
-				<span><b>PEÇAS POR HORA:</b></span> <span id='pecas_por_hora'>0</span><br>
-				<span><b>PESO DE MATERIAL POR HORA (kg):</b></span> <span id='peso_de_material_por_hora'>0</span><br>
-				<span><b>EFICIÊNCIA POR HORA:</b></span> <span id='eficiencia_por_hora'>0</span><br>
-				<span><b>EFICIÊNCIA POR TURNO:</b></span> <span id='eficiencia_por_turno'>0</span><br>
-				<span><b>HORAS TRABALHADAS:</b></span> <span id='horas_trabalhadas'>0</span><br>
-				<span><b>HORAS IMPRODUTIVAS:</b></span> <span id='horas_improdutivas'>0</span><br>
+				<span><b>PESO MASTERBACH:</b></span> <span id='id_peso_material'>0</span><br>
+				<span><b>PESO TOTAL:</b></span> <span id='id_peso_total'>0</span><br>
 				</p>
 			</div>
 			
