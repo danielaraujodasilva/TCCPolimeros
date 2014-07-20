@@ -56,3 +56,11 @@
 	    font-weight: normal;
 	    font-style: normal; }
 */
+
+			.tabelaLaranjaEscuro{background-color:DarkOrange; color: white; font-weight: bold;}
+			.tabelaLaranja{background-color:Orange; color: white; font-weight: bold;}
+			.tabelaAzulEscuro{background-color:DarkBlue; color: white; font-weight: bold;}
+			.tabelaAzul{background-color:Blue; color: white; font-weight: bold;}
+			.tabelaCinzaEscuro{background-color:DarkGray; color: white; font-weight: bold;}
+			.tabelaCinza{background-color:Gray; color: white; font-weight: bold;}
+			.tabela{font-weight: bold;}
